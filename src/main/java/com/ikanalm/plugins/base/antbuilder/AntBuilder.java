@@ -22,8 +22,8 @@ import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.tasks.Ant;
 import hudson.tasks.Ant.AntInstallation;
-import hudson.tasks._ant.AntConsoleAnnotator;
-import hudson.tasks._ant.Messages;
+import hudson.tasks._maven.MavenConsoleAnnotator;
+import hudson.tasks.Messages;
 import hudson.util.ArgumentListBuilder;
 import hudson.util.VariableResolver;
 import jenkins.model.Jenkins;
@@ -106,9 +106,11 @@ public class AntBuilder {
             args.add(launcher.isUnix() ? "ant" : "ant.bat");
         } else {
             Node node = workspace.toComputer().getNode();
+/* No message found
             if (node == null) {
                 throw new AbortException(Messages.Ant_NodeOffline());
             }
+*/
             ai = ai.forNode(node, listener);
             ai = ai.forEnvironment(env);
             String exe = ai.getExecutable(launcher);
@@ -188,7 +190,7 @@ public class AntBuilder {
 
         long startTime = System.currentTimeMillis();
         try {
-            AntConsoleAnnotator aca = new AntConsoleAnnotator(listener.getLogger(),run.getCharset());
+            MavenConsoleAnnotator aca = new MavenConsoleAnnotator(listener.getLogger(),run.getCharset());
             int r;
             try {
                 r = launcher.launch().cmds(args).envs(env).stdout(aca).pwd(buildFilePath.getParent()).join();
