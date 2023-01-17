@@ -1,2 +1,2 @@
 # IKANALM-plugin
-repository for the Jenkils plugin for IKANALM
+repository for the Jenkins plugin for IKANALM
