@@ -1,2 +1,2 @@
 # IKANALM-plugin
-repository for the Jenkins plugin for IKANALM
+IKAN Base Plugin for Ant and Java
