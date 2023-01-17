@@ -1,0 +1,63 @@
+<project name="build" default="build">
+
+	<target name="init">
+                <property file="build.properties"/>
+                <property name="source"      value="${basedir}"/>
+                <property name="target"      value="${basedir}/target"/>
+                <!-- Project Plugin parameters -->
+                <property name="project"         value="almPluginsBase"/>
+                <property name="project.version" value="1.0.0"/>
+                <property name="project.plugin"  value="almbase"/>
+                <property name="buildDir"  value="${source}/${project.plugin}"/>
+                <!-- Jenkins Plugin parameters -->
+                <property name="jenkins.version" value="2.7.3"/>
+                <property name="maven.home" value="D:/tools/apache-maven-3.6.0"/>
+                <property name="maven.args" value="clean -DskipTests=true package"/>
+                <property name="project.javaPrefix" value="com.ikanalm.plugins"/>
+                <property name="project.artifactId" value="${project.plugin}-plugin"/>
+                <property name="project.artifactVersion" value="${project.version}-SNAPSHOT"/>
+                <property name="project.groupName" value="ALM Base Ant Plugin"/>
+                <delete dir="${buildDir}" quiet="true"/>
+	</target>
+
+	<target name="build" depends="init,buildPlugin,buildArchive"/>
+
+        <!-- ***************************************************************** -->
+        <!-- ****** Build Plugin                                   *********** -->
+        <!-- ***************************************************************** -->
+        <target name="buildPlugin">
+                <mkdir dir="${buildDir}"/>
+                <copy todir="${buildDir}">
+                        <fileset dir="${source}" includes="src/**"/>
+                </copy>
+                <copy file="${source}/pom_xml.model" overwrite="true"
+                    tofile="${buildDir}/pom.xml">
+                    <filterchain> <expandproperties/> </filterchain>
+                </copy>
+                <echo message="Building ${project.plugin} Plugin"/>
+                <exec executable="${maven.home}/bin/mvn.cmd" dir="${buildDir}"
+                    outputproperty="buildPlugins" resultproperty="buildResult" timeout="300000">
+                    <arg line="${maven.args}"/>
+                </exec>
+                <condition property="buildError">
+                        <not> <equals arg1="${buildResult}" arg2="0"/> </not>
+                </condition>
+                <antcall target="buildError"/>
+                <echo message="==> SUCCESS Build ${project} Plugin=${project.plugin}"/>
+        </target>
+        <target name="buildError" if="buildError">
+                <echo message="----- Buildlog ------------------------${line.separator}${buildPlugins}"/>
+                <fail message="==> ERROR Build ${project} Plugin=${project.plugin}"/>
+        </target>
+        <!-- ***************************************************************** -->
+        <!-- ****** Build Project Archive                          *********** -->
+        <!-- ***************************************************************** -->
+        <target name="buildArchive">
+                <echo message="Building ${project} Archive"/>
+                <mkdir dir="${target}/Plugins"/>
+                <move tofile="${target}/Plugins/${project.artifactId}-${project.artifactVersion}.hpi"
+                        file="${buildDir}/target/${project.artifactId}.hpi"/>
+                <!--delete dir="${buildDir}" quiet="yes"/-->
+        </target>
+
+</project>

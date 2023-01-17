@@ -1,0 +1,4 @@
+<?jelly escape-by-default='true'?>
+<div>
+    ALM Base Ant Plugin. This is the base plugin that is required by IKAN ALM Ant plugins.
+</div>
