@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jenkins-ci.plugins</groupId>
+        <artifactId>plugin</artifactId>
+        <version>4.52</version>
+        <relativePath/>
+    </parent>
+    <groupId>com.ikanalm.plugins</groupId>
+    <artifactId>ikan-almbase</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>ALM Base Ant Plugin</name>
+    <description>ALM Base Ant Plugin. Doesn't contain any features, but contains base classes that can be extended to convert ALM Phases into Jenkins Pipeline Steps</description>
+    <packaging>hpi</packaging>
+    <properties>
+        <jenkins.version>2.361.4</jenkins.version>
+        <java.level>11</java.level>
+        <workflow-step-api-plugin.version>2.16</workflow-step-api-plugin.version>
+    </properties>
+    <licenses>
+        <license>
+            <name>IKAN License</name>
+            <url>https://www.ikanalm.com/PluginPlusLicense</url>
+        </license>
+    </licenses>
+    <!-- Assuming you want to host on @jenkinsci -->
+<!--    <scm>
+        <connection>scm:git:git://github.com/jenkinsci/ikan-almbase-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:jenkinsci/ikan-almbase-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/ikan-almbase-plugin</url>
+    </scm>-->
+    <!-- -->
+        <dependencies>
+        <dependency>
+		    <groupId>org.jenkins-ci.plugins</groupId>
+		    <artifactId>ant</artifactId>
+		    <version>1.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-step-api</artifactId>
+            <version>${workflow-step-api-plugin.version}</version>
+        </dependency>
+        <dependency>
+                    <groupId>org.freemarker</groupId>
+                    <artifactId>freemarker</artifactId>
+                    <version>2.3.28</version>
+        </dependency>
+    </dependencies>
+<!-- Thanks for using https://jar-download.com -->
+    <repositories>
+        <repository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <snapshotRepository>
+          <id>ikan-libs-snapshots</id>
+          <name>ikan-libs-snapshots</name>
+          <url>http://ikan550v.ikan.local:8081/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>

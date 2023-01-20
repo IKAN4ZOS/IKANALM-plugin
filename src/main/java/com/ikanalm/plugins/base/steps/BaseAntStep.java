@@ -1,12 +1,12 @@
 /**
  * 
  */
-package com.ikanalm.plugins.base;
+package com.ikanalm.plugins.base.steps;
 
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 import org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution;
 
-import com.ikanalm.plugins.antbuilder.AntBuilder;
+import com.ikanalm.plugins.base.antbuilder.AntBuilder;
 
 import hudson.EnvVars;
 import hudson.FilePath;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ikanalm.plugins.base;
+package com.ikanalm.plugins.base.steps;
 
 import java.io.File;
 import java.io.StringWriter;
@@ -62,9 +62,13 @@ public abstract class BaseStep extends Step {
 	 * @author frs
 	 *
 	 */
-	@SuppressWarnings("serial")
+//	@SuppressWarnings("serial")
 	public static class BaseExecution extends SynchronousNonBlockingStepExecution<Void> {
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		// link to the surrounding Step
 		protected transient final BaseStep step;
 
@@ -118,7 +122,7 @@ public abstract class BaseStep extends Step {
         // copy the phase resources zip to the workspace
     	FilePath resourcesZipFile = new FilePath(workspace, fqPhaseName + "/resources.zip");
     	resourcesZipFile.delete();
-    	Class theClass = getClass();
+    	Class<? extends BaseStep> theClass = getClass();
     	URL resourcesZipFileUrl = theClass.getResource("/resources-" + fqPhaseName + ".zip");
     	resourcesZipFile.copyFrom(resourcesZipFileUrl);
         

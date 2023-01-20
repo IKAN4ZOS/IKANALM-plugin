@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ikanalm.plugins.utils;
+package com.ikanalm.plugins.base.utils;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -94,16 +94,20 @@ public class Utils {
 
                     // Create the parent directory
                     if (!file.getParentFile().exists()) {
-                        file.getParentFile().mkdirs();
+                        boolean dirsCreated = file.getParentFile().mkdirs();
                     }
 
                     // Save file
-                    FileOutputStream fos = new FileOutputStream(file.getPath());
-                    fos.write(buffer, 0, bytesInBuffer);
-                    fos.close();
+                    try (FileOutputStream fos = new FileOutputStream(file.getPath())){
+                        fos.write(buffer, 0, bytesInBuffer);
+                        fos.flush();
+					} finally {
+						// FileOutputStream is automatically closed
+					}
+                    
 
                     // Set modification date to the date in the zipEntry
-                    file.setLastModified(zipEntry.getTime());
+                    boolean lastModifiedSet = file.setLastModified(zipEntry.getTime());
                 }
                 // Zipentry is a directory
                 else {
@@ -114,9 +118,9 @@ public class Utils {
 
                     // Create the directory
                     File dir = new File(destDirName, zipEntryName);
-                    dir.setLastModified(zipEntry.getTime());
+                    boolean lastModifiedSet = dir.setLastModified(zipEntry.getTime());
                     if (!dir.exists()) {
-                        dir.mkdirs();
+                    	boolean dirsCreated = dir.mkdirs();
                     }
                 }
             }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ikanalm.plugins.antbuilder;
+package com.ikanalm.plugins.base.antbuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,8 +106,9 @@ public class AntBuilder {
             args.add(launcher.isUnix() ? "ant" : "ant.bat");
         } else {
             Node node = null;
-            if (workspace.toComputer() != null)
-               node = workspace.toComputer().getNode();
+            Computer computer = workspace.toComputer();
+            if (computer != null)
+               node = computer.getNode();
 /* No message found
             if (node == null) {
                 throw new AbortException(Messages.Ant_NodeOffline());
@@ -215,12 +216,15 @@ public class AntBuilder {
 /*            String errorMessage = Messages.Ant_ExecFailed(); */
             String errorMessage = "Command execution failed.";
             if(ai==null && (System.currentTimeMillis()-startTime)<1000) {
-                if(Jenkins.getInstance().getDescriptorByType(Ant.DescriptorImpl.class).getInstallations() == null)
+            	Jenkins jenkins = Jenkins.getInstanceOrNull();
+                if((jenkins != null) && (jenkins.getDescriptorByType(Ant.DescriptorImpl.class)
+                		.getInstallations() == null)) {
                     // looks like the user didn't configure any Ant installation
                     errorMessage += " Maybe you need to configure where your Ant installations are?"; /* Messages.Ant_GlobalConfigNeeded(); */
-                else
+                } else {
                     // There are Ant installations configured but the project didn't pick it
                     errorMessage += " Maybe you need to configure the job to choose one of your Ant installations?"; /* Messages.Ant_ProjectConfigNeeded(); */
+                }
             }
             throw new AbortException(errorMessage);
         }
@@ -232,13 +236,17 @@ public class AntBuilder {
 	 * @return matching AntInstallation, or null if not found
 	 */
 	private AntInstallation findAntInstallation() {
-    	AntInstallation[] antInstallations = Jenkins.getInstance().getDescriptorByType(Ant.DescriptorImpl.class).getInstallations();
-		// get AntInstallation that matches this.antName
-        for( AntInstallation i : antInstallations ) {
-            if(antName != null && antName.equals(i.getName())) {
-                return i;
-            }
-        }
+		Jenkins jenkins = Jenkins.getInstanceOrNull();
+		if (jenkins != null) {
+	    	AntInstallation[] antInstallations = jenkins.getDescriptorByType(Ant.DescriptorImpl.class)
+	    			.getInstallations();
+			// get AntInstallation that matches this.antName
+	        for( AntInstallation i : antInstallations ) {
+	            if(antName != null && antName.equals(i.getName())) {
+	                return i;
+	            }
+	        }
+		}
     	
 		return null;
 	}
