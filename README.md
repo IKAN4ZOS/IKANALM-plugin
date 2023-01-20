@@ -5,4 +5,4 @@ It contains entries for working with ANT and Java and other ANT IKAN plugins are
 
 Install it in your Builder before installing other IKAN plugin.
 
-[Licence](https://www.ikanalm.com/PluginPlusLicense "Plugins License")
+[License](https://www.ikanalm.com/PluginPlusLicense "Plugins License")

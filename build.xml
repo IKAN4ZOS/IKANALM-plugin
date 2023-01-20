@@ -55,7 +55,7 @@
         <target name="buildArchive">
                 <echo message="Building ${project} Archive"/>
                 <mkdir dir="${target}/Plugins"/>
-                <move tofile="${target}/Plugins/${project.artifactId}-${project.artifactVersion}.hpi"
+                <move tofile="${target}/Plugins/${project.artifactId}-plugin-${project.artifactVersion}.hpi"
                         file="${buildDir}/target/${project.artifactId}.hpi"/>
                 <!--delete dir="${buildDir}" quiet="yes"/-->
         </target>

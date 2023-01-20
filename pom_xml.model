@@ -4,8 +4,8 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>3.57</version>
-        <relativePath />
+        <version>4.52</version>
+        <relativePath/>
     </parent>
     <groupId>${project.javaPrefix}</groupId>
     <artifactId>${project.artifactId}</artifactId>
@@ -61,7 +61,7 @@
             <url>https://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
     </pluginRepositories>
-<!--
+
     <distributionManagement>
         <repository>
           <id>${artifactory.libs.id}</id>
@@ -69,5 +69,5 @@
           <url>${artifactory.libs.url}</url>
         </repository>
     </distributionManagement>
--->
+
 </project>

@@ -23,7 +23,7 @@ import hudson.model.TaskListener;
 import hudson.tasks.Ant;
 import hudson.tasks.Ant.AntInstallation;
 import hudson.tasks._maven.MavenConsoleAnnotator;
-import hudson.tasks.Messages;
+/* import hudson.tasks.Messages;   Not permitted with new Jenkins versions */
 import hudson.util.ArgumentListBuilder;
 import hudson.util.VariableResolver;
 import jenkins.model.Jenkins;
@@ -105,17 +105,27 @@ public class AntBuilder {
         if(ai==null) {
             args.add(launcher.isUnix() ? "ant" : "ant.bat");
         } else {
-            Node node = workspace.toComputer().getNode();
+            Node node = null;
+            if (workspace.toComputer() != null)
+               node = workspace.toComputer().getNode();
 /* No message found
             if (node == null) {
                 throw new AbortException(Messages.Ant_NodeOffline());
             }
 */
+            if (node == null) {
+                throw new AbortException("Node is Offline");
+            }
             ai = ai.forNode(node, listener);
             ai = ai.forEnvironment(env);
             String exe = ai.getExecutable(launcher);
+/*
             if (exe==null) {
                 throw new AbortException(Messages.Ant_ExecutableNotFound(ai.getName()));
+            }
+*/
+            if (exe==null) {
+                throw new AbortException("Cannot find executable from the chosen Ant installation " + ai.getName());
             }
             args.add(exe);
         }
@@ -202,14 +212,15 @@ public class AntBuilder {
         } catch (IOException e) {
             Util.displayIOException(e,listener);
 
-            String errorMessage = Messages.Ant_ExecFailed();
+/*            String errorMessage = Messages.Ant_ExecFailed(); */
+            String errorMessage = "Command execution failed.";
             if(ai==null && (System.currentTimeMillis()-startTime)<1000) {
                 if(Jenkins.getInstance().getDescriptorByType(Ant.DescriptorImpl.class).getInstallations() == null)
                     // looks like the user didn't configure any Ant installation
-                    errorMessage += Messages.Ant_GlobalConfigNeeded();
+                    errorMessage += " Maybe you need to configure where your Ant installations are?"; /* Messages.Ant_GlobalConfigNeeded(); */
                 else
                     // There are Ant installations configured but the project didn't pick it
-                    errorMessage += Messages.Ant_ProjectConfigNeeded();
+                    errorMessage += " Maybe you need to configure the job to choose one of your Ant installations?"; /* Messages.Ant_ProjectConfigNeeded(); */
             }
             throw new AbortException(errorMessage);
         }

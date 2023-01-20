@@ -1,6 +1,7 @@
 REM script to run the ANT script
 
-SET "JAVA_HOME=D:\Java\jdk1.8.0_211"
+REM "JAVA_HOME=D:\Java\jdk1.8.0_211"
+SET "JAVA_HOME=D:\Java\jdk-11.0.7"
 SET JAVA_CMD=%JAVA_HOME%\bin\java.exe
 SET "JAVA_OPTS="
 SET "ANT_HOME=D:\tools\apache-ant-1.10.8"

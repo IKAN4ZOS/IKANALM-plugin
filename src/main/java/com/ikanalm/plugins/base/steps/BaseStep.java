@@ -109,7 +109,7 @@ public abstract class BaseStep extends Step {
 	 * extract the zipped phase resources into a subdir of the workspace
 	 * the name of the resource file is "resources-<FQ_PHASE_NAME>.zip"
 	 * the contents will be unzipped into the folder "<WORKSPACE>/<FQ_PHASE_NAME>"
-	 * 
+	 *
 	 * @param workspace
 	 * @param fqPhaseName
 	 * @throws Exception
@@ -118,7 +118,8 @@ public abstract class BaseStep extends Step {
         // copy the phase resources zip to the workspace
     	FilePath resourcesZipFile = new FilePath(workspace, fqPhaseName + "/resources.zip");
     	resourcesZipFile.delete();
-    	URL resourcesZipFileUrl = getClass().getResource("/resources-" + fqPhaseName + ".zip");
+    	Class theClass = getClass();
+    	URL resourcesZipFileUrl = theClass.getResource("/resources-" + fqPhaseName + ".zip");
     	resourcesZipFile.copyFrom(resourcesZipFileUrl);
         
         // unzip the phase resources zip 

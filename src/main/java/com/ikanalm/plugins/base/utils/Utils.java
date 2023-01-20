@@ -36,7 +36,7 @@ public class Utils {
 	 */
     public static void uncompress(String zipFileName, String destDirName) throws IOException {
 
-    	ZipFile zipFile = null;
+    	ZipFile zipFile = new ZipFile(zipFileName);
     	FileInputStream fis = null;
     	BufferedInputStream bis = null;
     	ZipInputStream zis = null;
@@ -44,14 +44,15 @@ public class Utils {
         try {
 
             // Open the zipfile
-            zipFile = new ZipFile(zipFileName);
+            // zipFile = ZipFile(zipFileName);
 
             // Get the size of each entry
             Map zipEntrySizes = new HashMap<>();
             Enumeration e = zipFile.entries();
             while (e.hasMoreElements()) {
                 ZipEntry zipEntry = (ZipEntry) e.nextElement();
-                zipEntrySizes.put(zipEntry.getName(), new Integer((int) zipEntry.getSize()));
+                Integer entrysize = (int) (long) zipEntry.getSize();
+                zipEntrySizes.put(zipEntry.getName(), entrysize);
             }
 
             // Open streams
