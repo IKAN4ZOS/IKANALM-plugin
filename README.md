@@ -1,8 +1,8 @@
 # Overview
 
-This plugin is the base of IKAN plugin(s) available for working with Pipelines.
-It contains entries for working with ANT and Java and other ANT IKAN plugins are depending on it. 
+This plugin is a prerequisite to install the other IKAN plugin(s).
+It contains needed entries to work with ANT and Java. Other ANT based IKAN plugins depend on it. 
 
-Install it in your Builder before installing other IKAN plugin.
+Install it in your Builder (CloudBees, Jenkins, Hudson,...) before installing other IKAN plugin.
 
 [License](https://www.ikanalm.com/PluginPlusLicense "Plugins License")
